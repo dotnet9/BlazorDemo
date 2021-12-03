@@ -1,6 +1,6 @@
 ﻿@page "/"
-@using Microsoft.AspNetCore.SignalR.Client
 @inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.SignalR.Client
 @implements IAsyncDisposable
 
 <PageTitle>Index</PageTitle>
@@ -31,7 +31,7 @@
 @code
 {
     private HubConnection? _hubConnection;
-    private List<string> messages = new List<string>();
+    private readonly List<string> messages = new();
     private string? userInput;
     private string? messageInput;
 

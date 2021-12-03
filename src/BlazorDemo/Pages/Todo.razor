@@ -19,14 +19,14 @@
 <button @onclick="AddTodo">Add todo</button>
 
 @code {
-    private List<TodoItem> _todos = new();
+    private readonly List<TodoItem> _todos = new();
     private string? newTodo;
 
     private void AddTodo()
     {
         if (!string.IsNullOrWhiteSpace(newTodo))
         {
-            _todos.Add(new TodoItem() { Title = newTodo });
+            _todos.Add(new TodoItem { Title = newTodo });
             newTodo = string.Empty;
         }
     }
