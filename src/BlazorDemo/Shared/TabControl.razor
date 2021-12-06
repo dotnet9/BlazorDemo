@@ -1,0 +1,41 @@
+﻿<CascadingValue Value="this">
+    <div class="btn-group" role="group">
+        @foreach (var tabPage in _pages)
+        {
+            <button type="button"
+                    class="btn @GetButtonClass(tabPage)"
+                    @onclick=@(()=>ActivatePage(tabPage))>
+                @tabPage.Text
+            </button>
+        }
+    </div>
+    @ChildContent
+</CascadingValue>
+
+@code {
+    // 如果我们想以<TabPage>标签的形式使用TabPage,那么下面的代码是必须的
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    public TabPage? ActivePage { get; set; }
+    readonly List<TabPage> _pages = new();
+
+    internal void AddPage(TabPage tabPage)
+    {
+        _pages.Add(tabPage);
+        if (_pages.Count == 1)
+            ActivePage = tabPage;
+        StateHasChanged();
+    }
+
+    string GetButtonClass(TabPage page)
+    {
+        return page == ActivePage ? "btn-primary" : "btn-secondary";
+    }
+
+    void ActivatePage(TabPage page)
+    {
+        ActivePage = page;
+    }
+
+}
