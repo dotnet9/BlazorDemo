@@ -1,0 +1,20 @@
+﻿@page "/Post"
+@inherits PostBase
+
+<EditForm EditContext="EditContext">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    @*<InputNumber @bind-Value="Post!.Id"></InputNumber>*@
+    <div class="form-group">
+        <label for="title">标题</label>
+        <InputText @bind-Value="Post!.Title" id="title" class="form-control w-25"></InputText>
+    </div>
+    
+    <div class="form-group">
+        <label for="content">内容</label>
+        <InputTextArea @bind-Value="Post!.Content" id="content" class="form-control 2-25" rows="4"></InputTextArea>
+    </div>
+
+    <button type="submit" class="btn btn-info">Submit</button>
+
+</EditForm>
