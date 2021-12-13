@@ -6,8 +6,14 @@
     <ValidationSummary />
     @*<InputNumber @bind-Value="Post!.Id"></InputNumber>*@
     <div class="form-group">
+        <label for="CreateDateTime">创建时间</label>
+        <input type="text" @bind="Post!.CreateDateTime" @bind:format="yyyy-MM-dd HH:mm:ss" id="CreateDateTime" class="form-control w-25" />
+        @Post?.Title
+    </div>
+    <div class="form-group">
         <label for="title">标题</label>
-        <InputText @bind-Value="Post!.Title" id="title" class="form-control w-25"></InputText>
+        <input type="text" @bind="Post!.Title" @bind:event="oninput" id="title" class="form-control w-25" />
+        @Post?.Title
     </div>
     
     <div class="form-group">
