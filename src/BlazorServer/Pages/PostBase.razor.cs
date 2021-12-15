@@ -6,10 +6,9 @@ namespace BlazorServer.Pages;
 
 public class PostBase : ComponentBase
 {
-	[Parameter]
-	public PostModel? Post { get; set; }
-
 	protected EditContext? EditContext;
+
+	[Parameter] public PostModel? Post { get; set; }
 
 	protected override Task OnInitializedAsync()
 	{

@@ -1,12 +1,14 @@
-﻿<button type="@ButtonType" class="@ButtonClass">@ButtonName</button>
+﻿<input @attributes="InputAttributes" value="MyButton"/>
 
 @code {
-    [Parameter]
-    public string? ButtonType { get; set; }
 
-    [Parameter]
-    public string? ButtonClass { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> InputAttributes { get; set; } =
+        new()
+        {
+            { "value", "Button" },
+            { "class", "btn btn-info" },
+            { "type", "button" }
+        };
 
-    [Parameter]
-    public string? ButtonName { get; set; }
 }

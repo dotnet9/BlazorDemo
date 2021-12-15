@@ -1,7 +1,7 @@
 ﻿<div @onclick="Toggle" class="card bg-light mb-3" style="width: 30rem">
     <div class="card-body">
         <h2 class="card-title">Toggle (<code>Expanded</code> = @Expanded)</h2>
-        
+
         @if (Expanded)
         {
             <p class="card-text">@ChildContent</p>
@@ -27,4 +27,5 @@
     {
         _expanded = !_expanded;
     }
+
 }
