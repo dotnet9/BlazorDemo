@@ -10,6 +10,12 @@ public class PostBase : ComponentBase
 
 	[Parameter] public PostModel? Post { get; set; }
 
+	[CascadingParameter(Name = "ColorStyle")]
+	public string? ColorStyle { get; set; }
+
+	[CascadingParameter(Name = "FontSizeStyle")]
+	public string? FontSizeStyle { get; set; }
+
 	protected override Task OnInitializedAsync()
 	{
 		EditContext = new EditContext(Post);

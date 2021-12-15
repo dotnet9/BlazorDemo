@@ -7,6 +7,9 @@ public class BlogBase : ComponentBase
 {
 	public BlogModel? Blog { get; set; }
 
+	public string? ColorStyle { get; set; } = "color: goldenrod";
+	public string? FontSizeStyle { get; set; } = "color: goldenrod";
+
 	protected override Task OnInitializedAsync()
 	{
 		LoadData();

@@ -1,4 +1,4 @@
-﻿<input @attributes="InputAttributes" value="MyButton"/>
+﻿<input @attributes="InputAttributes" style="@ColorStyle"/>
 
 @code {
 
@@ -11,4 +11,6 @@
             { "type", "button" }
         };
 
+    [CascadingParameter]
+    public string? ColorStyle { get; set; }
 }
