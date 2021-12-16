@@ -5,10 +5,16 @@ namespace BlazorServer.Pages;
 
 public class BlogBase : ComponentBase
 {
+	private int _postId;
 	public BlogModel? Blog { get; set; }
 
 	public string? ColorStyle { get; set; } = "color: goldenrod";
-	public string? FontSizeStyle { get; set; } = "color: goldenrod";
+
+	protected void Add()
+	{
+		_postId++;
+		Blog?.Posts?.Add(new PostModel { Id = _postId });
+	}
 
 	protected override Task OnInitializedAsync()
 	{
@@ -22,26 +28,16 @@ public class BlogBase : ComponentBase
 		{
 			Id = 1,
 			Name = "我的博客",
-			Posts = new List<PostModel>
-			{
-				new()
-				{
-					Id = 1, Title = "标题1", Content = "内容1", CreateDateTime = new DateTime(2021, 12, 11, 10, 20, 50)
-				},
-				new()
-				{
-					Id = 1, Title = "标题2", Content = "内容2", CreateDateTime = new DateTime(2021, 12, 12, 9, 13, 15)
-				},
-				new()
-				{
-					Id = 1, Title = "标题3", Content = "内容3", CreateDateTime = new DateTime(2021, 12, 13, 20, 31, 26)
-				},
-				new()
-				{
-					Id = 1, Title = "标题4", Content = "内容4", CreateDateTime = new DateTime(2021, 12, 14, 22, 15, 27)
-				}
-			},
+			Posts = new List<PostModel>(),
 			CreateDateTime = new DateTime(2021, 12, 14, 23, 46, 59)
 		};
+	}
+
+	protected void GetPostId(int id)
+	{
+		var post = Blog?.Posts?.FirstOrDefault(p => p.Id == id);
+		if (post != null)
+			Blog!.Posts!.Remove(post);
+		//StateHasChanged();
 	}
 }

@@ -12,6 +12,7 @@
     <link href="css/site.css" rel="stylesheet"/>
     <link href="BlazorServer.styles.css" rel="stylesheet"/>
     <link rel="stylesheet" href="bootstrap-icons-1.7.2/bootstrap-icons.css"/>
+    <script src="sweetalert2/sweetalert.js"></script>
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered"/>
 </head>
 <body>
@@ -29,5 +30,24 @@
 </div>
 
 <script src="_framework/blazor.server.js"></script>
+<script>
+    function SweetConfirm(title) {
+        return new Promise((resolve) => {
+            swal({
+                title: title,
+                text: "这个操作不可逆",
+                icon: "warning",
+                buttons: ["取消", "确定"],
+                dangerMode: true
+            }).then((willDelete) => {
+                resolve(willDelete);
+                if (willDelete) {
+                    swal("删除成功", "日志被删除了", "success");
+                }
+            });
+
+        });
+    }
+</script>
 </body>
 </html>
