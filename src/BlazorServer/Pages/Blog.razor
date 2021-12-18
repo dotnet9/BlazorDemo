@@ -7,7 +7,7 @@
 }
 else
 {
-    <div class="container">
+    @*<div class="container">*@
         <div class="row">
             <div class="col pl-0">
                 <label>博客名称</label>
@@ -15,18 +15,18 @@ else
                 <MyButton value="Add" class="btn btn-info my-2" type="button" @onclick="Add"/>
             </div>
         </div>
-        <div class="row">
+        @*<div class="row">*@
             @if (Blog.Posts != null)
             {
                 foreach (var post in Blog.Posts)
                 {
-                    <div class="col-md-3 border rounded p-3 mr-2 mb-2 w-25">
+                    @*<div class="col-md-3 border rounded p-3 mr-2 mb-2 w-25">*@
                         <CascadingValue Value="ColorStyle" Name="ColorStyle" IsFixed="true">
                             <Post Post="post" GetPostId="GetPostId"/>
                         </CascadingValue>
-                    </div>
+                    @*</div>*@
                 }
             }
-        </div>
-    </div>
+        @*</div>*@
+    @*</div>*@
 }
