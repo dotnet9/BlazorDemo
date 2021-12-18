@@ -14,5 +14,9 @@ public class PostModel
 	[MinLength(100, ErrorMessage = "内容太短")]
 	public string? Content { get; set; }
 
-	public DateTime CreateDateTime { get; set; } = new(2021, 12, 13, 23, 40, 23);
+	public int BlogId { get; set; }
+
+	public BlogModel? Blog { get; set; }
+
+	public DateTime CreateDateTime { get; set; }
 }
