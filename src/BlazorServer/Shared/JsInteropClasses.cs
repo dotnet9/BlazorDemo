@@ -19,12 +19,12 @@ public class JsInteropClasses : IDisposable
 	{
 		var confirm = await _js.InvokeAsync<object?>("SweetConfirm", $"是否确定删除日志{title}?");
 		if (confirm == null)
-		{
 			return false;
-		}
-		else
-		{
-			return bool.TryParse(confirm.ToString(), out var result) && result;
-		}
+		return bool.TryParse(confirm.ToString(), out var result) && result;
+	}
+
+	public async Task Alert(string title)
+	{
+		await _js.InvokeAsync<object?>("Alert", title);
 	}
 }

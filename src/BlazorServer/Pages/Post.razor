@@ -1,14 +1,18 @@
-﻿@inherits PostBase
+﻿@page "/Post"
+@inherits PostBase
 
 <div class="form-group">
-    <label for="CreateDateTime">创建时间</label>
-    <input type="text" @bind="Post!.CreateDateTime" @bind:format="yyyy-MM-dd HH:mm:ss" id="CreateDateTime" class="form-control"/>
+    <div class="form-group">
+        <label for="CreateDateTime">创建时间</label>
+        <input type="text" @bind="Post!.CreateDateTime" @bind:format="yyyy-MM-dd HH:mm:ss" id="CreateDateTime" class="form-control"/>
+        <br/>
+        <label for="UpdateDateTime">更新时间</label>
+        <input type="text" @bind="Post!.UpdateDateTime" @bind:format="yyyy-MM-dd HH:mm:ss" id="UpdateDateTime" class="form-control"/>
+    </div>
 </div>
-<EditForm EditContext="EditContext">
+<EditForm EditContext="EditContext" OnValidSubmit="CreatePost">
     <DataAnnotationsValidator/>
     <ValidationSummary/>
-    <label>Id：</label>
-    <span class="w-25">@Post?.Id</span>
     <div class="form-group">
         <label for="title" style="@ColorStyle">标题</label>
         <input type="text" @bind="Post!.Title" @bind:event="oninput" id="title" class="form-control"/>
@@ -16,9 +20,12 @@
 
     <div class="form-group">
         <label for="content">内容</label>
-        <InputTextArea @bind-Value="Post!.Content" id="content" class="form-control" rows="8"></InputTextArea>
+        <InputTextArea @bind-Value="Post!.Content" id="content" class="form-control" rows="4"></InputTextArea>
     </div>
-    <MyButton value="Submit" class="btn btn-primary" type="button"></MyButton>
-    <MyButton value="Reset" class="btn btn-dark" type="button"></MyButton>
-    <input value="Delete" class="btn btn-danger" type="button" @onclick="DeletePost"/>
+
+    <div class="form-group">
+        <MyButton value="Submit" class="btn btn-primary" type="submit"></MyButton>
+        <MyButton value="Reset" class="btn btn-dark" type="reset"></MyButton>
+        <input value="Delete" class="btn btn-danger" type="button" @onclick="DeletePost"/>
+    </div>
 </EditForm>

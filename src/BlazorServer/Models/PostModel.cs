@@ -19,4 +19,6 @@ public class PostModel
 	public BlogModel? Blog { get; set; }
 
 	public DateTime CreateDateTime { get; set; }
+
+	public DateTime UpdateDateTime { get; set; }
 }

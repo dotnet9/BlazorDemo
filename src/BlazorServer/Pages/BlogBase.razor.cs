@@ -1,36 +1,39 @@
 ﻿using BlazorServer.Models;
+using BlazorServer.Repository;
+using BlazorServer.Shared;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace BlazorServer.Pages;
 
 public class BlogBase : ComponentBase
 {
-	private int _postId;
-	public BlogModel? Blog { get; set; }
+	private JsInteropClasses? _jsClass;
+	[Inject] protected IJSRuntime? Js { get; set; }
+	[Inject] protected IBlogRepository? BlogRepository { get; set; }
 
+	public BlogModel? Blog { get; set; }
 	public string? ColorStyle { get; set; } = "color: goldenrod";
 
 	protected void Add()
 	{
-		_postId++;
-		Blog?.Posts?.Add(new PostModel { Id = _postId });
-	}
-
-	protected override Task OnInitializedAsync()
-	{
-		LoadData();
-		return base.OnInitializedAsync();
-	}
-
-	private void LoadData()
-	{
-		Blog = new BlogModel
+		Blog!.Posts!.Add(new PostModel
 		{
-			Id = 1,
-			Name = "我的博客",
-			Posts = new List<PostModel>(),
-			CreateDateTime = new DateTime(2021, 12, 14, 23, 46, 59)
-		};
+			BlogId = Blog.Id,
+			CreateDateTime = DateTime.Now,
+			UpdateDateTime = DateTime.Now
+		});
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		_jsClass = new JsInteropClasses(Js!);
+		await LoadData();
+	}
+
+	private async Task LoadData()
+	{
+		Blog = await BlogRepository!.GetBlog();
 	}
 
 	protected void GetPostId(int id)
@@ -38,6 +41,19 @@ public class BlogBase : ComponentBase
 		var post = Blog?.Posts?.FirstOrDefault(p => p.Id == id);
 		if (post != null)
 			Blog!.Posts!.Remove(post);
-		//StateHasChanged();
+	}
+
+	protected async Task CreateBlog()
+	{
+		var result = await BlogRepository!.CreateBlog(Blog!);
+		if (result.IsSuccess)
+			await LoadData();
+		else
+			await _jsClass!.Alert(result.Message!);
+	}
+
+	protected async Task PostCreated()
+	{
+		await LoadData();
 	}
 }

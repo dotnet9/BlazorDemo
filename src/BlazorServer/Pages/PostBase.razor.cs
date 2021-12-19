@@ -1,4 +1,5 @@
 ﻿using BlazorServer.Models;
+using BlazorServer.Repository;
 using BlazorServer.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -9,10 +10,9 @@ namespace BlazorServer.Pages;
 public class PostBase : ComponentBase, IDisposable
 {
 	private JsInteropClasses _jsClass;
-
 	protected EditContext? EditContext;
 	[Inject] protected IJSRuntime? Js { get; set; }
-
+	[Inject] protected IPostRepository? PostRepository { get; set; }
 	[Parameter] public PostModel? Post { get; set; }
 
 	[CascadingParameter(Name = "ColorStyle")]
@@ -22,6 +22,7 @@ public class PostBase : ComponentBase, IDisposable
 	public string? FontSizeStyle { get; set; }
 
 	[Parameter] public EventCallback<int> GetPostId { get; set; }
+	[Parameter] public EventCallback PostCreated { get; set; }
 
 	public void Dispose()
 	{
@@ -30,8 +31,8 @@ public class PostBase : ComponentBase, IDisposable
 
 	protected override Task OnInitializedAsync()
 	{
-		_jsClass = new JsInteropClasses(Js);
-		EditContext = new EditContext(Post);
+		_jsClass = new JsInteropClasses(Js!);
+		EditContext = new EditContext(Post!);
 		EditContext.SetFieldCssClassProvider(new CustomFieldClassProvider());
 
 		return base.OnInitializedAsync();
@@ -39,8 +40,23 @@ public class PostBase : ComponentBase, IDisposable
 
 	protected async Task DeletePost()
 	{
-		//var confirm = await Js!.InvokeAsync<bool>("confirm", $"是否删除{Post?.Title}?");
 		var confirm = await _jsClass.Confirm(Post!.Title!);
-		if (confirm) await GetPostId.InvokeAsync(Post!.Id);
+		if (confirm)
+		{
+			var deleted = await PostRepository!.DeletePost(Post.Id);
+			if (deleted.IsSuccess)
+				await GetPostId.InvokeAsync(Post!.Id);
+			else
+				await _jsClass.Alert(deleted.Message!);
+		}
+	}
+
+	protected async Task CreatePost()
+	{
+		var result = await PostRepository!.CreatePost(Post!);
+		if (result.IsSuccess)
+			await PostCreated.InvokeAsync();
+		else
+			await _jsClass!.Alert(result.Message!);
 	}
 }
