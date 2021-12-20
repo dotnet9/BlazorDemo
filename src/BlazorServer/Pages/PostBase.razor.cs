@@ -1,6 +1,6 @@
-﻿using BlazorServer.Models;
-using BlazorServer.Repository;
+﻿using BlazorServer.Repository;
 using BlazorServer.Shared;
+using BlazorServer.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
@@ -13,7 +13,7 @@ public class PostBase : ComponentBase, IDisposable
 	protected EditContext? EditContext;
 	[Inject] protected IJSRuntime? Js { get; set; }
 	[Inject] protected IPostRepository? PostRepository { get; set; }
-	[Parameter] public PostModel? Post { get; set; }
+	[Parameter] public PostViewModel? Post { get; set; }
 
 	[CascadingParameter(Name = "ColorStyle")]
 	public string? ColorStyle { get; set; }
@@ -56,7 +56,7 @@ public class PostBase : ComponentBase, IDisposable
 		var result = await PostRepository!.CreatePost(Post!);
 		if (result.IsSuccess)
 			await PostCreated.InvokeAsync();
-		else
-			await _jsClass!.Alert(result.Message!);
+
+		await _jsClass!.Alert(result.Message!);
 	}
 }

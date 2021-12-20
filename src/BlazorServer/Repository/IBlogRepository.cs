@@ -1,10 +1,11 @@
 ﻿using BlazorServer.Models;
+using BlazorServer.ViewModels;
 
 namespace BlazorServer.Repository;
 
 public interface IBlogRepository
 {
-	Task<ResultViewModel> CreateBlog(BlogModel blog);
+	Task<ResultViewModel> CreateBlog(BlogViewModel blog);
 
-	Task<BlogModel> GetBlog();
+	Task<BlogViewModel> GetBlog();
 }

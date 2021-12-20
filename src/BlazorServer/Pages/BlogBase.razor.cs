@@ -1,6 +1,6 @@
-﻿using BlazorServer.Models;
-using BlazorServer.Repository;
+﻿using BlazorServer.Repository;
 using BlazorServer.Shared;
+using BlazorServer.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -12,12 +12,12 @@ public class BlogBase : ComponentBase
 	[Inject] protected IJSRuntime? Js { get; set; }
 	[Inject] protected IBlogRepository? BlogRepository { get; set; }
 
-	public BlogModel? Blog { get; set; }
+	public BlogViewModel? Blog { get; set; }
 	public string? ColorStyle { get; set; } = "color: goldenrod";
 
 	protected void Add()
 	{
-		Blog!.Posts!.Add(new PostModel
+		Blog!.Posts!.Add(new PostViewModel
 		{
 			BlogId = Blog.Id,
 			CreateDateTime = DateTime.Now,

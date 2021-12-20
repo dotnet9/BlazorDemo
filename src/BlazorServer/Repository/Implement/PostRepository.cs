@@ -1,4 +1,5 @@
 ﻿using BlazorServer.Models;
+using BlazorServer.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazorServer.Repository.Implement;
@@ -12,7 +13,7 @@ public class PostRepository : IPostRepository
 		_appDbContext = appDbContext;
 	}
 
-	public async Task<ResultViewModel> CreatePost(PostModel post)
+	public async Task<ResultViewModel> CreatePost(PostViewModel post)
 	{
 		var data = await _appDbContext.Posts!.FirstOrDefaultAsync(x => x.Id == post.Id);
 		if (data != null)
@@ -40,13 +41,10 @@ public class PostRepository : IPostRepository
 	public async Task<ResultViewModel> DeletePost(int id)
 	{
 		var data = await _appDbContext.Posts!.FirstOrDefaultAsync(x => x.Id == id);
-		if (data != null)
-		{
-			_appDbContext.Posts!.Remove(data);
-			await _appDbContext.SaveChangesAsync();
-			return new ResultViewModel { IsSuccess = true, Message = $"{data.Title}删除成功！" };
-		}
+		if (data == null) return new ResultViewModel { IsSuccess = false, Message = $"id为{id}的Post不存在！" };
 
-		return new ResultViewModel { IsSuccess = false, Message = $"id为{id}的Post不存在！" };
+		_appDbContext.Posts!.Remove(data);
+		await _appDbContext.SaveChangesAsync();
+		return new ResultViewModel { IsSuccess = true, Message = $"{data.Title}删除成功！" };
 	}
 }
