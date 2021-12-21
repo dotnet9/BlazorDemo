@@ -1,4 +1,5 @@
-﻿using BlazorServer.Repository;
+﻿using System.Text.Json;
+using BlazorServer.Repository;
 using BlazorServer.Shared;
 using BlazorServer.ViewModels;
 using Microsoft.AspNetCore.Components;
@@ -40,8 +41,17 @@ public class PostBase : ComponentBase, IDisposable
 
 	protected async Task DeletePost()
 	{
-		var confirm = await _jsClass.Confirm(Post!.Title!);
-		if (confirm)
+		// 改成ViewModel
+		var sweetConfirm = new SweetConfirmViewModel
+		{
+			RequestTitle = $"是否确定删除日志 {Post!.Title}?",
+			RequestText = "这个操作不可恢复",
+			ResponseTitle = "删除成功",
+			ResponseText = "日志被删除了"
+		};
+		var jsonString = JsonSerializer.Serialize(sweetConfirm);
+		var result = await _jsClass.Confirm(jsonString);
+		if (result)
 		{
 			var deleted = await PostRepository!.DeletePost(Post.Id);
 			if (deleted.IsSuccess)

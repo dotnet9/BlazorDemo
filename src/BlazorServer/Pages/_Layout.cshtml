@@ -31,18 +31,20 @@
 
 <script src="_framework/blazor.server.js"></script>
 <script>
-    function SweetConfirm(title) {
+    function SweetConfirm(jsonString) {
+        // 这里要parse才能正常传回来
+        var arg = JSON.parse(jsonString);
         return new Promise((resolve) => {
             swal({
-                title: title,
-                text: "这个操作不可逆",
+                title: arg.RequestTitle,
+                text: arg.RequestText,
                 icon: "warning",
                 buttons: ["取消", "确定"],
                 dangerMode: true
             }).then((willDelete) => {
                 resolve(willDelete);
                 if (willDelete) {
-                    swal("删除成功", "日志被删除了", "success");
+                    swal(arg.ResponseTitle, arg.ResponseText, "success");
                 }
             });
 

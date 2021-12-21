@@ -15,9 +15,9 @@ public class JsInteropClasses : IDisposable
 	{
 	}
 
-	public async ValueTask<bool> Confirm(string title)
+	public async ValueTask<bool> Confirm(string jsonString)
 	{
-		var confirm = await _js.InvokeAsync<object?>("SweetConfirm", $"是否确定删除日志{title}?");
+		var confirm = await _js.InvokeAsync<object?>("SweetConfirm", jsonString);
 		if (confirm == null)
 			return false;
 		return bool.TryParse(confirm.ToString(), out var result) && result;
