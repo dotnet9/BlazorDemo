@@ -23,6 +23,11 @@ public class JsInteropClasses : IDisposable
 		return bool.TryParse(confirm.ToString(), out var result) && result;
 	}
 
+	public async Task ConsoleLog(string message)
+	{
+		await _js.InvokeAsync<object?>("console.log", message);
+	}
+
 	public async Task Alert(string title)
 	{
 		await _js.InvokeAsync<object?>("Alert", title);

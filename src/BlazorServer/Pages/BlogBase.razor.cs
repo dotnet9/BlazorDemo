@@ -31,6 +31,11 @@ public class BlogBase : ComponentBase
 		await LoadData();
 	}
 
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		await _jsClass!.ConsoleLog("这是Blazor Server的console.log信息");
+	}
+
 	private async Task LoadData()
 	{
 		Blog = await BlogRepository!.GetBlog();
