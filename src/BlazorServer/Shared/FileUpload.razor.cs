@@ -1,8 +1,8 @@
-﻿using BlazorServer.ViewModels;
+﻿using System.Text.Json;
+using BlazorServer.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
-using System.Text.Json;
 
 namespace BlazorServer.Shared;
 

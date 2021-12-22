@@ -16,10 +16,7 @@ public class BlogRepository : IBlogRepository
 	public async Task<ResultViewModel> CreateBlog(BlogViewModel blog)
 	{
 		var data = await _appDbContext.Blogs!.FirstOrDefaultAsync(x => x.Id == blog.Id);
-		if (data != null)
-		{
-			return new ResultViewModel { IsSuccess = false, Message = $"{blog.Name}已存在！" };
-		}
+		if (data != null) return new ResultViewModel { IsSuccess = false, Message = $"{blog.Name}已存在！" };
 
 		data = new BlogModel();
 		data.Name = blog.Name;
@@ -33,10 +30,7 @@ public class BlogRepository : IBlogRepository
 	public async Task<BlogViewModel> GetBlog()
 	{
 		var blog = await _appDbContext.Blogs!.Include(b => b.Posts).FirstOrDefaultAsync();
-		if (blog == null)
-		{
-			return new BlogViewModel();
-		}
+		if (blog == null) return new BlogViewModel();
 
 		var blogViewModel = new BlogViewModel
 		{
