@@ -9,31 +9,42 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Blog" Match="NavLinkMatch.All">
-                <span class="bi bi-file-earmark-post h4 p-2 mb-0" aria-hidden="true"></span> Blog
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Post" Match="NavLinkMatch.All">
-                <span class="bi bi-file-earmark-post h4 p-2 mb-0" aria-hidden="true"></span> Post
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="FileUpload" Match="NavLinkMatch.All">
-                <span class="bi bi-card-image h4 p-2 mb-0" aria-hidden="true"></span> File Upload
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Guid" Match="NavLinkMatch.All">
-                <span class="bi bi-record2 h4 p-2 mb-0" aria-hidden="true"></span> Guid
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Identity/Account/Login" Match="NavLinkMatch.All">
-                <span class="bi bi-file-earmark-lock2 h4 p-2 mb-0" aria-hidden="true"></span> Login
-            </NavLink>
-        </div>
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Blog" Match="NavLinkMatch.All">
+                        <span class="bi bi-file-earmark-post h4 p-2 mb-0" aria-hidden="true"></span> Blog
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Post" Match="NavLinkMatch.All">
+                        <span class="bi bi-file-earmark-post h4 p-2 mb-0" aria-hidden="true"></span> Post
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="FileUpload" Match="NavLinkMatch.All">
+                        <span class="bi bi-card-image h4 p-2 mb-0" aria-hidden="true"></span> File Upload
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Guid" Match="NavLinkMatch.All">
+                        <span class="bi bi-record2 h4 p-2 mb-0" aria-hidden="true"></span> Guid
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Identity/Account/Logout" Match="NavLinkMatch.All">
+                        <span class="bi bi-lock h4 p-2 mb-0" aria-hidden="true"></span> Logout
+                    </NavLink>
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Identity/Account/Login" Match="NavLinkMatch.All">
+                        <span class="bi bi-unlock h4 p-2 mb-0" aria-hidden="true"></span> Login
+                    </NavLink>
+                </div>
+            </NotAuthorized>
+        </AuthorizeView>
     </nav>
 </div>
 
