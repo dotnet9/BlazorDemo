@@ -1,0 +1,47 @@
+﻿@page "/RolesManagement/RolesList"
+@attribute [Authorize]
+
+<h1>所有角色</h1>
+
+@if (Roles.Any())
+{
+    <NavLink class="btn btn-primary mb-3" href="RolesManagement/CreateRole" Match="NavLinkMatch.All">
+        新增角色
+    </NavLink>
+
+    foreach (var role in Roles)
+    {
+        <div class="card mb-3 w-25">
+            <div class="card-header">
+                Role Id : @role.Id
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@role.Name</h5>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-primary" @onclick="() => EditRole(role.Id!)">
+                    编辑角色
+                </button>
+                <button type="button" class="btn btn-danger" @onclick="() => DeleteRole(role.Id!)">
+                    刪除角色
+                </button>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card w-25">
+        <div class="card-header">
+            还沒有角色
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                点击底下的按钮添加角色
+            </h5>
+            <NavLink class="btn btn-primary mb-3" href="RolesManagement/CreateRole" Match="NavLinkMatch.All">
+                新增角色
+            </NavLink>
+        </div>
+    </div>
+}

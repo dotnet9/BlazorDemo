@@ -20,6 +20,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<IGuidService, GuidService>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IRolesRepository, RolesRepository>();
 
 var app = builder.Build();
 
