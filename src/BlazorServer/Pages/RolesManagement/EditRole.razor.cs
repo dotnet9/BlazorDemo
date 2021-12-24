@@ -32,4 +32,9 @@ public partial class EditRole
 	{
 		NavigationManager!.NavigateTo("/RolesManagement/RolesList");
 	}
+
+	public void EditUsersInRole()
+	{
+		NavigationManager!.NavigateTo($"/RolesManagement/EditUsersInRole/{Id}");
+	}
 }

@@ -1,6 +1,6 @@
 ﻿@page "/Blog"
 @inherits BlogBase
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Admin")]
 
 @if (Blog == null)
 {

@@ -120,7 +120,8 @@ public class RolesRepository : IRolesRepository
 		var role = await _roleManager.FindByIdAsync(roleId);
 		var model = new List<CustomUserRoleViewModel>();
 
-		foreach (var user in _userManager.Users)
+		// 这里注意，_userManager.Users.ToList()后面一定要加.ToList()，否则会抛出异常：https://stackoverflow.com/questions/60727080/helping-solving-there-is-already-an-open-datareader-associated-with-this-comman
+		foreach (var user in _userManager.Users.ToList())
 		{
 			var userRoleViewModel = new CustomUserRoleViewModel
 			{
