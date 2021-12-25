@@ -17,6 +17,10 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 	.AddEntityFrameworkStores<AppDbContext>();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddAuthorization(options =>
+{
+	options.AddPolicy("IsAdmin", policy => { policy.RequireClaim("ManageRole", "true"); });
+});
 builder.Services.AddScoped<IGuidService, GuidService>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
